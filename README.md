@@ -6,6 +6,8 @@ Kafka is a powerful stream processing platform developed by the Apache Software 
 
 To quickly get Kafka up and running, Docker is an excellent choice. Here's a step-by-step guide:
 
+I have created docker compose file for local setup [docker-compose](https://github.com/ssumitkv/kafka-spring/blob/main/scripts/single-zookeeper-single-kafka.yml).
+
 ### Start a Single Zookeeper and Kafka Broker )
 ```bash
 docker-compose -f single-zookeeper-single-kafka.yml up -d
