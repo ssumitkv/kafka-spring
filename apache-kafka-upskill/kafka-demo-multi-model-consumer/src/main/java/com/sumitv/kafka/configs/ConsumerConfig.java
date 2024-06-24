@@ -30,21 +30,16 @@ public class ConsumerConfig {
     String kafkaGroupId;
 
     @Bean
-    @Qualifier("simpleStringConsumerFactory")
     public ConsumerFactory<String, Object> multiTypeConsumerFactory() {
-        Map<String, Object> property = new HashMap<>();
-        property.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-//        property.put(org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG,kafkaGroupId);
-        property.put(org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        property.put(org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-
-        return new DefaultKafkaConsumerFactory<>(property);
+        HashMap<String, Object> props = new HashMap<>();
+        props.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        return new DefaultKafkaConsumerFactory<>(props);
     }
-
     @Bean
-    @Qualifier("simpleStringListerConsumerFactory")
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String,Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, Object> multiTypeKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(multiTypeConsumerFactory());
         factory.setRecordMessageConverter(multiModelConverter());
         return factory;
@@ -56,7 +51,7 @@ public class ConsumerConfig {
         DefaultJackson2JavaTypeMapper defaultJackson2JavaTypeMapper = new DefaultJackson2JavaTypeMapper();
 
         defaultJackson2JavaTypeMapper.setTypePrecedence(Jackson2JavaTypeMapper.TypePrecedence.TYPE_ID);
-        defaultJackson2JavaTypeMapper.addTrustedPackages("com.sumitv.kafka.entities");
+        defaultJackson2JavaTypeMapper.addTrustedPackages("greetings.*");
 
         Map<String, Class<?>> mapping = new HashMap<>();
         mapping.put("com.sumitv.kafka.entities.Greetings", com.sumitv.kafka.entities.Greetings.class);

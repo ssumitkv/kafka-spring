@@ -5,11 +5,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
-@NoArgsConstructor
-@ToString
-@AllArgsConstructor
+
 public class Greetings {
-    String message;
-    String name;
+    private String message;
+    private String greetingName;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getName() {
+        return greetingName;
+    }
+
+    public void setgreetingName(String greetingName) {
+        this.greetingName = greetingName;
+    }
+
+    public Greetings() {
+    }
+
+    public Greetings(String message, String name) {
+        this.message = message;
+        this.greetingName = name;
+    }
 }

@@ -21,7 +21,7 @@ public class ProducerConfig {
     private String bootstrapAddress;
     @Bean
     @Qualifier("simpleCustomMessageProducerFactory")
-    public ProducerFactory<String, Greetings> producerFactory(){
+    public ProducerFactory<String, Greetings> multiTypeProducerFactory(){
         Map<String, Object> configProperties = new HashMap<>();
         configProperties.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapAddress);
         configProperties.put(org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -36,7 +36,7 @@ public class ProducerConfig {
     @Bean
     @Qualifier("simpleCustomMessageTemplate")
     public KafkaTemplate<String, Greetings> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+        return new KafkaTemplate<>(multiTypeProducerFactory());
     }
 
 
